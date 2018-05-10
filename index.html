@@ -179,26 +179,19 @@
 					isScrolling = Math.abs(endPos.x) < Math.abs(endPos.y) ? 1:0; //isScrolling为1时，表示纵向滑动，0为横向滑动
 
 					if(isScrolling === 0 ||isScrolling === 1 && Math.abs(endPos.y) < 60 ){
-							event.preventDefault(); //阻止触摸事件的默认行为，即阻止滚屏
 
+							event.preventDefault(); //阻止触摸事件的默认行为，即阻止滚屏
 							if(Math.abs(endPos.x)>80) {
 
-									if (endPos.x >0 && Number(imgId)>0) {
-											content.style.marginLeft ='-'+(Number(imgId)-1)*100+'%'
+									if (endPos.x >0 && Number(imgId)>0 || endPos.x <0 && Number(imgId)<3) {
+											var next = endPos.x >0 ? Number(imgId)-1 :  Number(imgId)+1
+
+											content.style.marginLeft ='-'+next*100+'%'
 											content.style.transition = 'margin-left 1s';
 											document.getElementsByClassName('active')[0].className = 'tab';
-											document.getElementById((Number(imgId)-1)).className = 'tab active';
-
-
-									} else if(endPos.x <0 && Number(imgId)<3) {
-
-											content.style.marginLeft = '-'+(Number(imgId)+1)*100+'%'
-											content.style.transition = 'margin-left 1s';
-											document.getElementsByClassName('active')[0].className = 'tab';
-											document.getElementById((Number(imgId)+1)).className = 'tab active';
-									} else {
-											console.log('Number(imgId)',Number(imgId))
+											document.getElementById(next).className = 'tab active';
 									}
+
 							}
 					}
 			}
