@@ -176,26 +176,30 @@
 					endPos = {x:touch.pageX -startX,y:touch.pageY - startY};
 					isScrolling = Math.abs(endPos.x) < Math.abs(endPos.y) ? 1:0; //isScrolling为1时，表示纵向滑动，0为横向滑动
 
-					if(isScrolling === 0 ||isScrolling === 1 && Math.abs(endPos.y)<80){
+					if(isScrolling === 0 ){
 							event.preventDefault(); //阻止触摸事件的默认行为，即阻止滚屏
-							alert(imgId)
+
 							if(Math.abs(x - startX)>80) {
+									console.log('11111111',document.getElementsByClassName('active'))
 									document.getElementsByClassName('active')[0].className = 'tab';
 //									document.getElementById(imgId).className = 'tab active';
 
-									if (x - startX >0) {
+									if (x - startX >0 && Number(imgId) > 0) {
 											content.style.marginLeft ='-'+(Number(imgId)-1)*100+'%'
 											content.style.transition = 'margin-left 1s';
+											console.log('next',(Number(imgId)-1))
+											document.getElementById((Number(imgId)-1)).className = 'tab active';
 
-									} else if(Number(imgId)<3) {
+
+									} else if(Number(imgId)<=3) {
 
 											content.style.marginLeft = '-'+(Number(imgId)+1)*100+'%'
 											content.style.transition = 'margin-left 1s';
+											console.log('next',(Number(imgId)+1))
+											document.getElementById((Number(imgId)+1)).className = 'tab active';
 									}
 
 							}
-
-					}else if(Math.abs(endPos.y)>80){
 
 					}
 
