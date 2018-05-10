@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>中国平安</title>
+	<style>
+		html{
+			font-size: 100px;
+		}
+		*{
+			margin: 0;
+			padding: 0;
+			font-family: "PingFangSC-Semibold" ,"Times New Roman",Georgia,Serif;
+		}
+		.head {
+			position: relative;
+			color: #ececec;
+			text-align: center;
+		}
+		.head img{
+			width: 100%;
+			display: block;
+		}
+		.title-container{
+			width: 100%;
+			position: absolute;
+			top: 40%;
+			text-align: center;
+		}
+		.title {
+			line-height: 28px;
+			text-space: 1;
+			font-size: 0.18rem;
+			letter-spacing: 2px;
+		}
+		.time{
+			font-size: 0.12rem;
+			letter-spacing: 1px;
+			margin-top: 0.05rem;
+		}
+		img {
+			width: 100%;
+		}
+		.tab-background{
+			width: 86%;
+			height: 0.4rem;
+			position: absolute;
+			bottom: 0.1rem;
+			left: 7%;
+			background-color: rgba(0,0,0,0.7);
+			opacity: 0.7;
+			filter:alpha(opacity:70);
+			-webkit-border-radius: 0.4rem;
+			-moz-border-radius: 0.4rem;
+			border-radius: 0.4rem;
+		}
+		.tab-container{
+			box-sizing: border-box;
+			padding: 0 5px;
+			width: 86%;
+			position: absolute;
+			bottom: 0.1rem;
+			left: 7%;
+			text-align: center;
+			font-size: 0.13rem;
+			-webkit-border-radius: 0.4rem;
+			-moz-border-radius: 0.4rem;
+			border-radius: 0.4rem;
+		}
+		.tab-container li{
+			display: inline-block;
+			width: 25%;
+			height: 0.3rem;
+			margin: 0.05rem 0;
+			line-height: 0.3rem;
+			-webkit-border-radius: 0.3rem;
+			-moz-border-radius: 0.3rem;
+			border-radius: 0.3rem;
+		}
+		.tab-container .active{
+			background: rgba(253,208,3,1);
+			background: -moz-linear-gradient(left,  rgba(253,208,3,1) 0%, rgba(230,82,18,1) 100%);
+			background: -webkit-gradient(linear, left 50%, right 50%, color-stop(0%,rgba(253,208,3,1)), color-stop(100%,rgba(230,82,18,1)));
+			background: -webkit-linear-gradient(left,  rgba(253,208,3,1) 0%,rgba(230,82,18,1) 100%);
+			background: -o-linear-gradient(left,  rgba(253,208,3,1) 0%,rgba(230,82,18,1) 100%);
+			background: -ms-linear-gradient(left,  rgba(253,208,3,1) 0%,rgba(230,82,18,1) 100%);
+			background: linear-gradient(to right,  rgba(253,208,3,1) 0%,rgba(230,82,18,1) 100%);
+			filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='rgba(253,208,3,1)', endColorstr='rgba(230,82,18,1)',GradientType=0 );
+			background: -webkit-gradient(linear, 0 50%, 100% 50%, from(rgba(253,208,3,1)), to(rgba(230,82,18,1)));
+			background: -moz-linear-gradient(left, rgba(253,208,3,1), rgba(230,82,18,1));
+		}
+		:root .tab-container li{filter:none;}
+		.content-container{
+			width: 400%;
+		}
+		.content{
+			display: inline-block;
+			width: 25%;
+		}
+	</style>
+</head>
+
+<body>
+
+<div class="head">
+	<img src="./assets/head@3x.png">
+	<div class="title-container">
+		<p class="title">A股上市责任暨投资者保护期刊</p>
+		<p class="time">2018年X月 第X期 </p>
+	</div>
+	<div class="tab-background"></div>
+	<ul class="tab-container">
+		<li id="0" class="tab active">
+			风险数据</li><li id="1" class="tab">
+		  案件聚焦</li><li id="2" class="tab">
+		  监管趋势</li><li id="3" class="tab">中伦专栏</li>
+	</ul>
+</div>
+
+<div class="content-container">
+	<div class="content">
+		<img class="img0" src="./assets/tab.jpeg">
+	</div><div class="content">
+		<img class="img1" src="./assets/tab.jpeg">
+	</div><div class="content">
+		<img class="img2" src="./assets/tab.jpeg">
+	</div><div class="content">
+		<img class="img3" src="./assets/tab.jpeg">
+	</div>
+</div>
+
+</body>
+<script>
+	var content = document.getElementsByClassName('content-container')[0];
+    var li = document.getElementsByTagName("li");
+    for(var i = 0; i < li.length; i++) {
+		(function tt(id) {
+            li[id].addEventListener("click",function (e) {
+                document.getElementsByClassName('active')[0].className = 'tab';
+                this.className = 'tab active';
+                var left = '-'+id*100+'%';
+                content.style.marginLeft = left;
+                content.style.transition = 'margin-left 1s';
+            })
+        })(i)
+    }
+
+
+	var touchStartFun = function (e) {
+			try
+			{
+					//e.preventDefault(); //阻止触摸时浏览器的缩放、滚动条滚动等
+
+					var touch = e.touches[0]; //获取第一个触点
+					var x = Number(touch.pageX); //页面触点X坐标
+					var y = Number(touch.pageY); //页面触点Y坐标
+					//记录触点初始位置
+					startX = x;
+					startY = y;
+					imgId = e.target.getAttribute('class').split('img')[1]
+			}
+			catch (e) {
+					console.log('touchSatrtFunc：' + e.message);
+			}
+	}
+
+	var touchMoveFun = function (e) {
+			try
+			{
+					//e.preventDefault(); //阻止触摸时浏览器的缩放、滚动条滚动等
+					var touch = e.touches[0]; //获取第一个触点
+					var x = Number(touch.pageX); //页面触点X坐标
+					var y = Number(touch.pageY); //页面触点Y坐标
+
+					endPos = {x:touch.pageX -startX,y:touch.pageY - startY};
+					isScrolling = Math.abs(endPos.x) < Math.abs(endPos.y) ? 1:0; //isScrolling为1时，表示纵向滑动，0为横向滑动
+
+					if(isScrolling === 0 ||isScrolling === 1 && Math.abs(endPos.y)<80){
+							event.preventDefault(); //阻止触摸事件的默认行为，即阻止滚屏
+							alert(imgId)
+							if(Math.abs(x - startX)>80) {
+									document.getElementsByClassName('active')[0].className = 'tab';
+//									document.getElementById(imgId).className = 'tab active';
+
+									if (x - startX >0) {
+											content.style.marginLeft ='-'+(Number(imgId)-1)*100+'%'
+											content.style.transition = 'margin-left 1s';
+
+									} else if(Number(imgId)<3) {
+
+											content.style.marginLeft = '-'+(Number(imgId)+1)*100+'%'
+											content.style.transition = 'margin-left 1s';
+									}
+
+							}
+
+					}else if(Math.abs(endPos.y)>80){
+
+					}
+
+			}
+			catch (e) {
+					alert('touchMoveFunc：' + e.message);
+			}
+	}
+
+	var touchEndFun = function (e) {
+			try {
+					//e.preventDefault(); //阻止触摸时浏览器的缩放、滚动条滚动等
+
+					var text = 'TouchEnd事件触发';
+			}
+			catch (e) {
+					alert('touchEndFunc：' + e.message);
+			}
+	}
+
+
+	content.addEventListener('touchstart',touchStartFun, false);
+
+	content.addEventListener('touchmove',touchMoveFun, false);
+
+	content.addEventListener('touchend',touchEndFun, false);
+
+</script>
+</html>
