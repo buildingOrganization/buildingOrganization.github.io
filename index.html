@@ -201,11 +201,21 @@
 	}
 
 
+	//绑定事件
+	var on = function(target, type, handler) {
+			if(target.addEventListener) {
+					target.addEventListener(type, handler, false);
+			} else {
+					target.attachEvent("on" + type,
+							function(event) {
+									return handler.call(target, event);
+							}, false);
+			}
+	};
 
 
-	content.addEventListener('touchstart',touchStartFun, false);
-
-	content.addEventListener('touchmove',touchMoveFun, false);
+	on(content,'touchstart',touchStartFun)
+	on(content,'touchmove',touchMoveFun)
 
 </script>
 </html>
