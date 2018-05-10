@@ -183,28 +183,24 @@
 
 							if(Math.abs(endPos.x)>80) {
 
-									document.getElementsByClassName('active')[0].className = 'tab';
-//									document.getElementById(imgId).className = 'tab active';
-
-									if (endPos.x >0 && Number(imgId) > 0) {
+									if (endPos.x >0 && Number(imgId)>0) {
 											content.style.marginLeft ='-'+(Number(imgId)-1)*100+'%'
 											content.style.transition = 'margin-left 1s';
-											console.log('next',(Number(imgId)-1))
+											document.getElementsByClassName('active')[0].className = 'tab';
 											document.getElementById((Number(imgId)-1)).className = 'tab active';
 
 
-									} else if(Number(imgId)<=3) {
+									} else if(endPos.x <0 && Number(imgId)<3) {
 
 											content.style.marginLeft = '-'+(Number(imgId)+1)*100+'%'
 											content.style.transition = 'margin-left 1s';
-											console.log('next',(Number(imgId)+1))
+											document.getElementsByClassName('active')[0].className = 'tab';
 											document.getElementById((Number(imgId)+1)).className = 'tab active';
+									} else {
+											console.log('Number(imgId)',Number(imgId))
 									}
-
 							}
-
 					}
-
 			}
 			catch (e) {
 					alert('touchMoveFunc：' + e.message);
