@@ -124,13 +124,13 @@
 <div class="body">
 	<div class="content-container">
 		<div class="content">
-			<img class="img0" src="./assets/tab.jpeg">
+			<img class="img0" src="./assets/tab.jpg">
 		</div><div class="content">
-		<img class="img1" src="./assets/tab.jpeg">
+		<img class="img1" src="./assets/tab.jpg">
 	</div><div class="content">
-		<img class="img2" src="./assets/tab.jpeg">
+		<img class="img2" src="./assets/tab.jpg">
 	</div><div class="content">
-		<img class="img3" src="./assets/tab.jpeg">
+		<img class="img3" src="./assets/tab.jpg">
 	</div>
 	</div>
 </div>
@@ -214,8 +214,12 @@
 	};
 
 
-	on(content,'touchstart',touchStartFun)
-	on(content,'touchmove',touchMoveFun)
+	content.addEventListener('touchstart',touchStartFun, false);
+
+	content.addEventListener('touchmove',touchMoveFun, false);
+
+/*	on(content,'touchstart',touchStartFun)
+	on(content,'touchmove',touchMoveFun)*/
 
 </script>
 </html>
