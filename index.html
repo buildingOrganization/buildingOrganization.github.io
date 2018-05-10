@@ -178,7 +178,7 @@
 					endPos = {x:touch.pageX -startX,y:touch.pageY - startY};
 					isScrolling = Math.abs(endPos.x) < Math.abs(endPos.y) ? 1:0; //isScrolling为1时，表示纵向滑动，0为横向滑动
 
-					if(isScrolling === 0 ||isScrolling === 1 && Math.abs(endPos.y) < 60 ){
+					if(isScrolling === 0 ||isScrolling === 1 && Math.abs(endPos.y) > 60 ){
 
 							event.preventDefault(); //阻止触摸事件的默认行为，即阻止滚屏
 							if(Math.abs(endPos.x)>80) {
