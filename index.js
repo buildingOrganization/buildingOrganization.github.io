@@ -13,7 +13,7 @@ window.onload = function () {
 								this.className = 'tab active';
 								var left = '-'+id*100+'%';
 								content.style.marginLeft = left;
-								content.style.transition = 'margin-left 1s';
+								content.style.transition = 'margin-left 0.5s';
 						})
 				})(i)
 		}
