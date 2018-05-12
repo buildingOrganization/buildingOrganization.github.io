@@ -24,7 +24,7 @@
 		}
 		.head img{
 			width: 100%;
-			display: block;
+			height: auto;
 		}
 		.title-container{
 			width: 100%;
@@ -111,7 +111,7 @@
 <body>
 
 <div class="head">
-	<img src="./assets/head@3x.jpg">
+	<img class="head-img" src="./assets/head@3x.jpg">
 	<div class="title-container">
 		<p class="title">A股上市责任暨投资者保护期刊</p>
 		<p class="time">2018年X月 第X期 </p>
@@ -141,83 +141,86 @@
 
 </body>
 <script>
-	var content = document.getElementsByClassName('content-container')[0];
-    var li = document.getElementsByTagName("li");
-    for(var i = 0; i < li.length; i++) {
-		(function tt(id) {
-            li[id].addEventListener("click",function (e) {
-                document.getElementsByClassName('active')[0].className = 'tab';
-                this.className = 'tab active';
-                var left = '-'+id*100+'%';
-                content.style.marginLeft = left;
-                content.style.transition = 'margin-left 1s';
-            })
-        })(i)
+		window.onload = function () {
+        //绑定事件
+        var on = function(target, type, handler) {
+            if(target.addEventListener) {
+                target.addEventListener(type, handler, false);
+            } else {
+                target.attachEvent("on" + type,
+                    function(event) {
+                        return handler.call(target, event);
+                    }, false);
+            }
+        };
+        var imageHeight = document.getElementsByClassName('head-img')[0].height;
+        document.getElementsByClassName('body')[0].style.paddingTop = imageHeight + 'px';
+        document.getElementsByClassName('head')[0].style.position = 'fixed';
+        var content = document.getElementsByClassName('content-container')[0];
+        var li = document.getElementsByTagName("li");
+        for(var i = 0; i < li.length; i++) {
+            (function tt(id) {
+                on(li[id],'click',function (e) {
+                    document.getElementsByClassName('active')[0].className = 'tab';
+                    this.className = 'tab active';
+                    var left = '-'+id*100+'%';
+                    content.style.marginLeft = left;
+                    content.style.transition = 'margin-left 0.5s';
+                    window.scrollTo(0,0);
+                })
+            })(i)
+        }
+
+
+        var touchStartFun = function (e) {
+            try
+            {
+                var touch = e.touches[0]; //获取第一个触点
+                var x = Number(touch.pageX); //页面触点X坐标
+                var y = Number(touch.pageY); //页面触点Y坐标
+
+                //记录触点初始位置
+                startX = x;
+                startY = y;
+                imgId = e.target.getAttribute('class').split('img')[1]
+            }
+            catch (e) {
+                console.log('touchSatrtFunc：' + e.message);
+            }
+        }
+
+        var touchMoveFun = function (e) {
+            try
+            {
+                var touch = e.touches[0]; //获取第一个触点
+
+                endPos = {x:touch.pageX -startX,y:touch.pageY - startY};
+                isScrolling = Math.abs(endPos.x) < Math.abs(endPos.y) ? 1:0; //isScrolling为1时，表示纵向滑动，0为横向滑动
+
+                if(isScrolling === 0 ||isScrolling === 1 && Math.abs(endPos.y) > 120 ){
+
+                    event.preventDefault(); //阻止触摸事件的默认行为，即阻止滚屏
+                    if(Math.abs(endPos.x)>80) {
+
+                        if (endPos.x >0 && Number(imgId)>0 || endPos.x <0 && Number(imgId)<3) {
+                            var next = endPos.x >0 ? Number(imgId)-1 :  Number(imgId)+1
+                            content.style.marginLeft ='-'+next*100+'%'
+                            content.style.transition = 'margin-left 0.5s';
+                            document.getElementsByClassName('active')[0].className = 'tab';
+                            document.getElementById(next).className = 'tab active';
+                            window.scrollTo(0,0);
+                        }
+
+                    }
+                }
+            }
+            catch (e) {
+                alert('touchMoveFunc：' + e.message);
+            }
+        }
+
+        on(content,'touchstart',touchStartFun)
+        on(content,'touchmove',touchMoveFun)
     }
-
-
-	var touchStartFun = function (e) {
-			try
-			{
-					var touch = e.touches[0]; //获取第一个触点
-					var x = Number(touch.pageX); //页面触点X坐标
-					var y = Number(touch.pageY); //页面触点Y坐标
-
-					//记录触点初始位置
-					startX = x;
-					startY = y;
-					imgId = e.target.getAttribute('class').split('img')[1]
-			}
-			catch (e) {
-					console.log('touchSatrtFunc：' + e.message);
-			}
-	}
-
-	var touchMoveFun = function (e) {
-			try
-			{
-					var touch = e.touches[0]; //获取第一个触点
-
-					endPos = {x:touch.pageX -startX,y:touch.pageY - startY};
-					isScrolling = Math.abs(endPos.x) < Math.abs(endPos.y) ? 1:0; //isScrolling为1时，表示纵向滑动，0为横向滑动
-
-					if(isScrolling === 0 ||isScrolling === 1 && Math.abs(endPos.y) > 120 ){
-
-							event.preventDefault(); //阻止触摸事件的默认行为，即阻止滚屏
-							if(Math.abs(endPos.x)>80) {
-
-									if (endPos.x >0 && Number(imgId)>0 || endPos.x <0 && Number(imgId)<3) {
-											var next = endPos.x >0 ? Number(imgId)-1 :  Number(imgId)+1
-
-											content.style.marginLeft ='-'+next*100+'%'
-											content.style.transition = 'margin-left 1s';
-											document.getElementsByClassName('active')[0].className = 'tab';
-											document.getElementById(next).className = 'tab active';
-									}
-
-							}
-					}
-			}
-			catch (e) {
-					alert('touchMoveFunc：' + e.message);
-			}
-	}
-
-
-	//绑定事件
-	var on = function(target, type, handler) {
-			if(target.addEventListener) {
-					target.addEventListener(type, handler, false);
-			} else {
-					target.attachEvent("on" + type,
-							function(event) {
-									return handler.call(target, event);
-							}, false);
-			}
-	};
-
-  on(content,'touchstart',touchStartFun)
-	on(content,'touchmove',touchMoveFun)
-
 </script>
 </html>
