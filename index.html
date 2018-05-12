@@ -141,6 +141,11 @@
 
 </body>
 <script>
+    document.getElementsByClassName('head-img')[0].onload = function () {
+        var imageHeight = document.getElementsByClassName('head-img')[0].height;
+        document.getElementsByClassName('head')[0].style.position = 'fixed';
+        document.getElementsByClassName('body')[0].style.paddingTop = imageHeight + 'px';
+    }
 		window.onload = function () {
         //绑定事件
         var on = function(target, type, handler) {
@@ -153,15 +158,12 @@
                     }, false);
             }
         };
-        var imageHeight = document.getElementsByClassName('head-img')[0].height;
-        document.getElementsByClassName('body')[0].style.paddingTop = imageHeight + 'px';
-        document.getElementsByClassName('head')[0].style.position = 'fixed';
         var content = document.getElementsByClassName('content-container')[0];
         var li = document.getElementsByTagName("li");
         for(var i = 0; i < li.length; i++) {
             (function tt(id) {
                 on(li[id],'click',function (e) {
-                    document.getElementsByClassName('active')[0].className = 'tab';
+		                document.getElementsByClassName('active')[0].className = 'tab';
                     this.className = 'tab active';
                     var left = '-'+id*100+'%';
                     content.style.marginLeft = left;
